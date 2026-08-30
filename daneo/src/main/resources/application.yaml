@@ -1,3 +1,8 @@
 spring:
   application:
     name: daneo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/daneo
+    username: daneo
+    password: daneo
