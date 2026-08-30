@@ -1,4 +1,10 @@
 # Daneo — 단어
+<p align="center">
+    <img src="./docs/daneo-logo.png" width="500px">
+</p>
+<p align="center">
+    <img src="./docs/daneo-marketing.png" width="700px">
+</p>
 
 > Apprends le vocabulaire coréen, un mot à la fois.
 

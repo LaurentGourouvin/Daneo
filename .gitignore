@@ -26,3 +26,5 @@ replay_pid*
 # Ide files
 .idea
 .DS_Store
+
+daneo-backend-issues.sh
