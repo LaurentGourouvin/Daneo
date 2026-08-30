@@ -6,3 +6,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/daneo
     username: daneo
     password: daneo
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    validate-on-migrate: true
