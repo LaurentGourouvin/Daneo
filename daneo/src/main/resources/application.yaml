@@ -1,11 +1,15 @@
 spring:
   application:
     name: daneo
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/daneo
-    username: daneo
-    password: daneo
+    url: ${DANEO_DB_URL}
+    username: ${DANEO_DB_USERNAME}
+    password: ${DANEO_DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -14,3 +18,9 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
+
+daneo:
+  image:
+    storage-path: ${DANEO_IMAGE_STORAGE_PATH}
+#  openai:
+#    api-key: ${OPENAI_API_KEY}
