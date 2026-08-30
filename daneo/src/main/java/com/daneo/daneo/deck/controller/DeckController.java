@@ -1,4 +1,4 @@
-package com.daneo.daneo.deck.Controller;
+package com.daneo.daneo.deck.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
