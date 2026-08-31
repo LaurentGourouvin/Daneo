@@ -1,0 +1,2 @@
+ALTER TABLE flashcard
+    ALTER COLUMN deck_id DROP NOT NULL;
