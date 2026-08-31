@@ -1,9 +1,6 @@
 package com.daneo.daneo.deck.controller;
 
-import com.daneo.daneo.deck.dto.DeckCreateRequest;
-import com.daneo.daneo.deck.dto.DeckDetailResponse;
-import com.daneo.daneo.deck.dto.DeckResponse;
-import com.daneo.daneo.deck.dto.DeckUpdateRequest;
+import com.daneo.daneo.deck.dto.*;
 import com.daneo.daneo.deck.service.DeckService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/decks")
@@ -31,6 +29,12 @@ public class DeckController {
                 .buildAndExpand(deck.id())
                 .toUri();
         return ResponseEntity.created(location).body(deck);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DeckListItemResponse>> list() {
+        List<DeckListItemResponse> decks = deckService.list();
+        return ResponseEntity.ok(decks);
     }
 
     @GetMapping("/{id}")
