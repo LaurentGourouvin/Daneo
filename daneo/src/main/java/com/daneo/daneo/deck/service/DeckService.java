@@ -1,12 +1,9 @@
 package com.daneo.daneo.deck.service;
 
 import com.daneo.daneo.deck.domain.Deck;
-import com.daneo.daneo.deck.dto.DeckDetailResponse;
-import com.daneo.daneo.deck.dto.DeckUpdateRequest;
+import com.daneo.daneo.deck.dto.*;
 import com.daneo.daneo.deck.exception.DeckNotFoundException;
 import com.daneo.daneo.deck.repository.DeckRepository;
-import com.daneo.daneo.deck.dto.DeckCreateRequest;
-import com.daneo.daneo.deck.dto.DeckResponse;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
 import com.daneo.daneo.flashcard.repository.FlashcardRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,11 @@ public class DeckService {
     public DeckResponse getDeckById(Integer id) {
         Deck deck = deckRepository.findById(id).orElseThrow(() -> new DeckNotFoundException(id));
         return toResponse(deck);
+    }
+
+    @Transactional(readOnly = true)
+    public List<DeckListItemResponse> list() {
+        return deckRepository.getDeckWithCardsCount();
     }
 
     @Transactional
