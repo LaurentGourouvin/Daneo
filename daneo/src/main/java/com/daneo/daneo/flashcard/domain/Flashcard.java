@@ -4,8 +4,8 @@ import com.daneo.daneo.deck.domain.Deck;
 import com.daneo.daneo.vocabulary.domain.VocabularySense;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.Generated;
-import org.hibernate.generator.EventType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.Instant;
@@ -18,8 +18,8 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "deck_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "deck_id", nullable = false)
     private Deck deck;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -35,13 +35,18 @@ public class Flashcard {
     @Column(name = "next_review_at")
     private Instant nextReviewAt;
 
-    @Generated
-    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Generated(event = {EventType.INSERT, EventType.UPDATE})
+    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     protected Flashcard(){}
+
+    public Flashcard(Deck deck, VocabularySense vocabularySense) {
+        this.deck = deck;
+        this.vocabularySense = vocabularySense;
+    }
 }

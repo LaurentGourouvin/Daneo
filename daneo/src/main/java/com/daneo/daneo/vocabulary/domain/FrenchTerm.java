@@ -2,8 +2,7 @@ package com.daneo.daneo.vocabulary.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.Generated;
-import org.hibernate.generator.EventType;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -19,8 +18,8 @@ public class FrenchTerm {
     @Column(nullable = false, length = 100, unique = true)
     private String term;
 
-    @Generated(event = {EventType.INSERT})
-    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     protected FrenchTerm(){}

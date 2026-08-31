@@ -3,8 +3,7 @@ package com.daneo.daneo.vocabulary.domain;
 import com.daneo.daneo.vocabulary.enums.PartOfSpeech;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.Generated;
-import org.hibernate.generator.EventType;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -39,13 +38,27 @@ public class VocabularySense {
     @Column(name = "image_path")
     private String imagePath;
 
-    @Generated(event = {EventType.INSERT})
-    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "french_term_id", nullable = false)
     private FrenchTerm frenchTerm;
 
-    protected VocabularySense(){}
+    protected VocabularySense() {
+    }
+
+    public VocabularySense(String koreanTerm, String romanization, PartOfSpeech partOfSpeech, String meaning,
+                           String exampleKorean, String exampleFrench, String imagePath, Instant createdAt,
+                           FrenchTerm frenchTerm) {
+        this.koreanTerm = koreanTerm;
+        this.romanization = romanization;
+        this.partOfSpeech = partOfSpeech;
+        this.meaning = meaning;
+        this.exampleKorean = exampleKorean;
+        this.exampleFrench = exampleFrench;
+        this.imagePath = imagePath;
+        this.frenchTerm = frenchTerm;
+    }
 }
