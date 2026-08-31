@@ -1,4 +1,4 @@
-package com.daneo.daneo.flashcard.Controller;
+package com.daneo.daneo.flashcard.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

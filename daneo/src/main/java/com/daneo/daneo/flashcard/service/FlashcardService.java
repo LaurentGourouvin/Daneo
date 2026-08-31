@@ -1,4 +1,4 @@
-package com.daneo.daneo.flashcard.Service;
+package com.daneo.daneo.flashcard.service;
 
 import org.springframework.stereotype.Service;
 

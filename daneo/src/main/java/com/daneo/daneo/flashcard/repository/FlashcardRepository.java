@@ -1,4 +1,4 @@
-package com.daneo.daneo.flashcard.Repository;
+package com.daneo.daneo.flashcard.repository;
 
 import org.springframework.stereotype.Repository;
 
