@@ -50,7 +50,7 @@ public class VocabularySense {
     }
 
     public VocabularySense(String koreanTerm, String romanization, PartOfSpeech partOfSpeech, String meaning,
-                           String exampleKorean, String exampleFrench, String imagePath, Instant createdAt,
+                           String exampleKorean, String exampleFrench, String imagePath,
                            FrenchTerm frenchTerm) {
         this.koreanTerm = koreanTerm;
         this.romanization = romanization;

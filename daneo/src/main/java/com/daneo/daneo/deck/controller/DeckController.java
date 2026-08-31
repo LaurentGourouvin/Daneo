@@ -1,6 +1,7 @@
 package com.daneo.daneo.deck.controller;
 
 import com.daneo.daneo.deck.dto.DeckCreateRequest;
+import com.daneo.daneo.deck.dto.DeckDetailResponse;
 import com.daneo.daneo.deck.dto.DeckResponse;
 import com.daneo.daneo.deck.dto.DeckUpdateRequest;
 import com.daneo.daneo.deck.service.DeckService;
@@ -35,6 +36,12 @@ public class DeckController {
     @GetMapping("/{id}")
     public ResponseEntity<DeckResponse> getById(@PathVariable Integer id) {
         DeckResponse deck = deckService.getDeckById(id);
+        return ResponseEntity.ok(deck);
+    }
+
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<DeckDetailResponse> deckDetail(@PathVariable Integer id) {
+        DeckDetailResponse deck = deckService.getDeckWithCards(id);
         return ResponseEntity.ok(deck);
     }
 
