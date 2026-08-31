@@ -18,8 +18,8 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "deck_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deck_id")
     private Deck deck;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

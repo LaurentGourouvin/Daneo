@@ -1,6 +1,7 @@
 package com.daneo.daneo.deck.service;
 
 import com.daneo.daneo.deck.domain.Deck;
+import com.daneo.daneo.deck.dto.DeckUpdateRequest;
 import com.daneo.daneo.deck.exception.DeckNotFoundException;
 import com.daneo.daneo.deck.repository.DeckRepository;
 import com.daneo.daneo.deck.dto.DeckCreateRequest;
@@ -26,6 +27,19 @@ public class DeckService {
     @Transactional
     public DeckResponse createDeck(DeckCreateRequest req) {
         Deck deck = deckRepository.save(toEntity(req));
+        return toResponse(deck);
+    }
+
+    @Transactional
+    public void deleteDeck(Integer id) {
+        Deck deck = deckRepository.findById(id).orElseThrow(() -> new DeckNotFoundException(id));
+        deckRepository.delete(deck);
+    }
+
+    @Transactional
+    public DeckResponse updateDeck(Integer id, DeckUpdateRequest request) {
+        Deck deck = deckRepository.findById(id).orElseThrow(() -> new DeckNotFoundException(id));
+        deck.renameDeck(request.name());
         return toResponse(deck);
     }
 

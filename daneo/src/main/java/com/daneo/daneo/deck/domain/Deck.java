@@ -35,4 +35,7 @@ public class Deck {
         this.description = description;
     }
 
+    public void renameDeck(String name) {
+        this.name = name;
+    }
 }

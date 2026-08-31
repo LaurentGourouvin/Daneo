@@ -2,8 +2,10 @@ package com.daneo.daneo.deck.controller;
 
 import com.daneo.daneo.deck.dto.DeckCreateRequest;
 import com.daneo.daneo.deck.dto.DeckResponse;
+import com.daneo.daneo.deck.dto.DeckUpdateRequest;
 import com.daneo.daneo.deck.service.DeckService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,5 +36,17 @@ public class DeckController {
     public ResponseEntity<DeckResponse> getById(@PathVariable Integer id) {
         DeckResponse deck = deckService.getDeckById(id);
         return ResponseEntity.ok(deck);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DeckResponse> updateDeck(@PathVariable Integer id, @RequestBody @Valid DeckUpdateRequest request) {
+        DeckResponse deck = deckService.updateDeck(id, request);
+        return ResponseEntity.ok(deck);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        deckService.deleteDeck(id);
+        return ResponseEntity.noContent().build();
     }
 }
