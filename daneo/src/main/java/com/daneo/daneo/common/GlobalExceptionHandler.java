@@ -1,6 +1,7 @@
 package com.daneo.daneo.common;
 
 import com.daneo.daneo.common.exception.NotFoundException;
+import com.daneo.daneo.translation.exception.TranslationServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.validation.FieldError;
@@ -49,5 +50,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleRuntimeException(Exception e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
+    }
+
+    @ExceptionHandler(TranslationServiceException.class)
+    public ProblemDetail handleTranslationService(TranslationServiceException e) {
+//        log.error("Translation service failure", e);   // ← la cause technique dans les logs
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage());
+        problem.setTitle("Translation unavailable");
+        return problem;
     }
 }

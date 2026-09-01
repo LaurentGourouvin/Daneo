@@ -2,6 +2,7 @@ package com.daneo.daneo.translation.client;
 
 import com.daneo.daneo.translation.client.dto.*;
 import com.daneo.daneo.translation.dto.*;
+import com.daneo.daneo.translation.exception.TranslationServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -52,20 +55,29 @@ public class TranslationClient {
         // on sérialise manuellement car le convertisseur du RestClient déforme le JsonNode du schéma
         String json = objectMapper.writeValueAsString(payload);
 
-        var response = openAI.post()
-                .uri(OPEN_TEXT_GENERATION_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(json)
-                .retrieve()
-                .body(OpenAiResponse.class);
+        try {
+            var response = openAI.post()
+                    .uri(OPEN_TEXT_GENERATION_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(json)
+                    .retrieve()
+                    .body(OpenAiResponse.class);
 
-        String rawJson = response.output().stream()
-                .filter(item -> "message".equals(item.type()))
-                .findFirst()
-                .orElseThrow()
-                .content().get(0)
-                .text();
+            String rawJson = response.output().stream()
+                    .filter(item -> "message".equals(item.type()))
+                    .findFirst()
+                    .orElseThrow()
+                    .content().get(0)
+                    .text();
 
-        return objectMapper.readValue(rawJson, TranslationResponse.class);
+            return objectMapper.readValue(rawJson, TranslationResponse.class);
+        } catch (ResourceAccessException e) {
+            throw new TranslationServiceException("Translation service is unavailable, please try again.", e);
+        } catch (RestClientResponseException e) {
+            throw new TranslationServiceException("Translation service returned an error.", e);
+        } catch (JsonProcessingException e) {
+            throw new TranslationServiceException("Unreadable response from the translation service.", e);
+        }
+
     }
 }
