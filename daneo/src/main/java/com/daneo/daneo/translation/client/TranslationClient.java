@@ -27,7 +27,7 @@ public class TranslationClient {
     @Value("${daneo.openai.model-text}")
     private String model;
 
-    public TranslationClient(@Qualifier("openAiClient") RestClient openAI,
+    public TranslationClient(@Qualifier("openAiTranslationClient") RestClient openAI,
                              @Value("classpath:prompts/translation.md") Resource promptResource,
                              @Value("classpath:schemas/translation-schema.json") Resource schemaResource,
                              ObjectMapper objectMapper) throws IOException {
