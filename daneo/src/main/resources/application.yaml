@@ -30,6 +30,7 @@ daneo:
     base-url: ${DANEO_OPENAI_BASE_URL}
     project-id: ${DANEO_OPENAI_PROJECT_ID}
     model-text: ${DANEO_OPENAI_MODEL_TEXT}
+    model-image: ${DANEO_OPENAI_MODEL_IMAGE}
 
 logging:
   level:
