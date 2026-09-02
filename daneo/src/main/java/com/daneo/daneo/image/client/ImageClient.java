@@ -18,8 +18,7 @@ public class ImageClient {
     private static final String size = "1024x1024";
     private static final String quality = "medium";
     private static final String background = "transparent";
-    private static final String format = "webp";
-
+    private static final String format = "png";
 
     @Value("${daneo.openai.model-image}")
     private String model;

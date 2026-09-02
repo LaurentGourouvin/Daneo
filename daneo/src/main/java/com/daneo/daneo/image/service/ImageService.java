@@ -1,6 +1,8 @@
 package com.daneo.daneo.image.service;
 
 import com.daneo.daneo.image.client.ImageClient;
+import com.sksamuel.scrimage.ImmutableImage;
+import com.sksamuel.scrimage.webp.WebpWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -31,5 +33,10 @@ public class ImageService {
     public byte[] generateIllustration(String frenchWord, String koreanWord, String meaning, String partOfSpeech) {
         String prompt = buildPrompt(frenchWord, koreanWord, meaning, partOfSpeech);
         return openAi.generateImage(prompt);
+    }
+
+    public byte[] resizeImage(byte[] image) throws IOException {
+        ImmutableImage resized = ImmutableImage.loader().fromBytes(image).scaleTo(400, 400);
+        return resized.bytes(WebpWriter.DEFAULT);
     }
 }
