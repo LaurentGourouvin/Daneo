@@ -2,6 +2,7 @@ package com.daneo.daneo;
 
 import com.daneo.daneo.image.exception.ImageStorageException;
 import com.daneo.daneo.image.service.LocalDiskImageStorageService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -15,12 +16,15 @@ class LocalDiskImageStorageServiceTest {
 
     @TempDir
     Path tempDir;
+    private LocalDiskImageStorageService service;
+
+    @BeforeEach
+    void setUp() {
+        service = new LocalDiskImageStorageService(tempDir.toString(), "http://localhost:8080");
+    }
 
     @Test
     void shouldStoreImageAndReturnWebpReference() {
-        LocalDiskImageStorageService service =
-                new LocalDiskImageStorageService(tempDir.toString());
-
         String reference = service.store("fake image bytes".getBytes());
 
         assertThat(reference).endsWith(".webp");
@@ -29,10 +33,15 @@ class LocalDiskImageStorageServiceTest {
 
     @Test
     void shouldRejectEmptyImage() {
-        LocalDiskImageStorageService service =
-                new LocalDiskImageStorageService(tempDir.toString());
-
         assertThatThrownBy(() -> service.store(new byte[0]))
                 .isInstanceOf(ImageStorageException.class);
+    }
+
+    @Test
+    void storedImageIsAccessibleViaUrl() {
+        String reference = service.store("fake".getBytes());
+        String url = service.getUrl(reference);
+
+        assertThat(url).isEqualTo("http://localhost:8080/images/" + reference);
     }
 }

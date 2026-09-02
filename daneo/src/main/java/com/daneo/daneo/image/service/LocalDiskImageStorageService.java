@@ -13,9 +13,13 @@ import java.util.UUID;
 public class LocalDiskImageStorageService implements ImageStorageService {
 
     private final Path storageDirectory;
+    private final String publicBaseUrl;
 
-    public LocalDiskImageStorageService(@Value("${daneo.image.storage-path}") String storagePath) {
+    public LocalDiskImageStorageService(@Value("${daneo.image.storage-path}") String storagePath,
+                                        @Value("${daneo.image.public-base-url}") String publicBaseUrl) {
+
         this.storageDirectory = Path.of(storagePath);
+        this.publicBaseUrl = publicBaseUrl;
 
         try {
             Files.createDirectories(this.storageDirectory);
@@ -45,6 +49,6 @@ public class LocalDiskImageStorageService implements ImageStorageService {
 
     @Override
     public String getUrl(String reference) {
-        return "";
+        return publicBaseUrl + "/images/" + reference;
     }
 }

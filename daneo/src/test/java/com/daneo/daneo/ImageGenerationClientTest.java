@@ -18,7 +18,7 @@ class ImageGenerationClientTest {
 
     @Test
     void shouldGenerateImage() throws Exception {
-        byte[] image = imageClient.generateImage("a simple dog, manga style, no text");
+        byte[] image = imageClient.generateImage("a simple apple, manga style, no text");
 
         assertThat(image).isNotEmpty();
         System.out.println("Image size = " + image.length + " bytes");
