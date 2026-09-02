@@ -32,8 +32,10 @@ build/
 ### VS Code ###
 .vscode/
 .DS_Store
-
+../.DS_Store
 .env
 .env.*
 !.env.example
 /storage/
+
+/test.html
