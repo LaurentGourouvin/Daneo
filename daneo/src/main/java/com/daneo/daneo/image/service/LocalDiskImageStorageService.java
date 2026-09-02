@@ -48,7 +48,7 @@ public class LocalDiskImageStorageService implements ImageStorageService {
     }
 
     @Override
-    public String getUrl(String reference) {
+    public String buildUrl(String reference) {
         return publicBaseUrl + "/images/" + reference;
     }
 }

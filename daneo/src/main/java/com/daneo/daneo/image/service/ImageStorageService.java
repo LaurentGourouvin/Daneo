@@ -16,7 +16,7 @@ public interface ImageStorageService {
      *
      * @param image the raw bytes of the image to store (must not be null or empty)
      * @return a unique, stable reference identifying the stored image;
-     *         this same value can later be passed to {@link #getUrl(String)}
+     *         this same value can later be passed to {@link #buildUrl(String)}}
      * @throws ImageStorageException if the image cannot be stored
      */
     String store(byte[] image);
@@ -27,5 +27,5 @@ public interface ImageStorageService {
      * @param reference a reference returned by {@link #store(byte[])}
      * @return the URL through which the image can be retrieved
      */
-    String getUrl(String reference);
+    String buildUrl(String reference);
 }

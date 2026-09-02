@@ -40,7 +40,7 @@ class LocalDiskImageStorageServiceTest {
     @Test
     void storedImageIsAccessibleViaUrl() {
         String reference = service.store("fake".getBytes());
-        String url = service.getUrl(reference);
+        String url = service.buildUrl(reference);
 
         assertThat(url).isEqualTo("http://localhost:8080/images/" + reference);
     }
