@@ -2,13 +2,10 @@ package com.daneo.daneo.flashcard.controller;
 
 import com.daneo.daneo.flashcard.dto.FlashcardCreateRequest;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
-import com.daneo.daneo.flashcard.service.FlashcardCreationService;
+import com.daneo.daneo.flashcard.service.FlashcardService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -17,9 +14,9 @@ import java.net.URI;
 @RequestMapping("/api/flashcards")
 public class FlashcardController {
 
-    private final FlashcardCreationService flashcardService;
+    private final FlashcardService flashcardService;
 
-    public FlashcardController(FlashcardCreationService flashcardService) {
+    public FlashcardController(FlashcardService flashcardService) {
         this.flashcardService = flashcardService;
     }
 

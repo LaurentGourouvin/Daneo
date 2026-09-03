@@ -17,10 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service
-public class FlashcardCreationService {
+import java.util.List;
 
-    private static final Logger log = LoggerFactory.getLogger(FlashcardCreationService.class);
+@Service
+public class FlashcardService {
+
+    private static final Logger log = LoggerFactory.getLogger(FlashcardService.class);
 
     private final RomanizationService romanizationService;
     private final ImageService imageService;
@@ -29,9 +31,9 @@ public class FlashcardCreationService {
     private final DeckRepository deckRepository;
     private final FlashcardRepository flashcardRepository;
 
-    public FlashcardCreationService(RomanizationService romanizationService, ImageService imageService,
-                                    VocabularySenseService vocabularyService, ImageStorageService imageStorageService,
-                                    DeckRepository deckRepository, FlashcardRepository flashcardRepository) {
+    public FlashcardService(RomanizationService romanizationService, ImageService imageService,
+                            VocabularySenseService vocabularyService, ImageStorageService imageStorageService,
+                            DeckRepository deckRepository, FlashcardRepository flashcardRepository) {
         this.romanizationService = romanizationService;
         this.imageService = imageService;
         this.vocabularyService = vocabularyService;
