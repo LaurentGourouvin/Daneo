@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "translations": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "korean": { "type": "string" },
+          "partOfSpeech": {
+            "type": "string",
+            "enum": ["NOUN", "VERB", "ADJECTIVE", "ADVERB", "EXPRESSION", "OTHER"]
+          },
+          "meaning": { "type": "string" }
+        },
+        "required": ["korean", "partOfSpeech", "meaning"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["translations"],
+  "additionalProperties": false
+}

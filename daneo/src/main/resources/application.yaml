@@ -1,3 +1,38 @@
 spring:
   application:
     name: daneo
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE}
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+
+  datasource:
+    url: ${DANEO_DB_URL}
+    username: ${DANEO_DB_USERNAME}
+    password: ${DANEO_DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+
+daneo:
+  image:
+    storage-path: ${DANEO_IMAGE_STORAGE_PATH}
+    public-base-url: ${DANEO_PUBLIC_BASE_URL}
+  openai:
+    api-key: ${DANEO_OPENAI_API_KEY}
+    base-url: ${DANEO_OPENAI_BASE_URL}
+#    project-id: ${DANEO_OPENAI_PROJECT_ID}
+    model-text: ${DANEO_OPENAI_MODEL_TEXT}
+    model-image: ${DANEO_OPENAI_MODEL_IMAGE}
+
+logging:
+  level:
+    org.springframework.web.client.RestClient: DEBUG
