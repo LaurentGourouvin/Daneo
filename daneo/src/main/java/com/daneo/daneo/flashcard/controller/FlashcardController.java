@@ -1,6 +1,7 @@
 package com.daneo.daneo.flashcard.controller;
 
 import com.daneo.daneo.flashcard.dto.FlashcardCreateRequest;
+import com.daneo.daneo.flashcard.dto.FlashcardResponseDetail;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
 import com.daneo.daneo.flashcard.service.FlashcardService;
 import jakarta.validation.Valid;
@@ -28,5 +29,11 @@ public class FlashcardController {
                 .buildAndExpand(flashcard.id())
                 .toUri();
         return ResponseEntity.created(location).body(flashcard);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FlashcardResponseDetail> getById(@PathVariable Integer id) {
+        FlashcardResponseDetail flashcard = flashcardService.getById(id);
+        return ResponseEntity.ok(flashcard);
     }
 }

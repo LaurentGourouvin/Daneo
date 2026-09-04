@@ -5,7 +5,9 @@ import com.daneo.daneo.deck.exception.DeckNotFoundException;
 import com.daneo.daneo.deck.repository.DeckRepository;
 import com.daneo.daneo.flashcard.domain.Flashcard;
 import com.daneo.daneo.flashcard.dto.FlashcardCreateRequest;
+import com.daneo.daneo.flashcard.dto.FlashcardResponseDetail;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
+import com.daneo.daneo.flashcard.exception.FlashcardNotFoundException;
 import com.daneo.daneo.flashcard.repository.FlashcardRepository;
 import com.daneo.daneo.image.service.ImageService;
 import com.daneo.daneo.image.service.ImageStorageService;
@@ -16,6 +18,7 @@ import com.daneo.daneo.vocabulary.service.VocabularySenseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -75,4 +78,29 @@ public class FlashcardService {
         return new FlashcardSummary(flashcard.getId(), vocabulary.getKoreanTerm(), romanized, request.frenchWord(), imageUrl);
     }
 
+    @Transactional(readOnly = true)
+    public FlashcardResponseDetail getById(Integer id) {
+        Flashcard card = flashcardRepository.findById(id)
+                .orElseThrow(() -> new FlashcardNotFoundException("Flashcard not found id: " + id));
+
+        return toFlashCardResponseDetail(card);
+    }
+
+    private FlashcardResponseDetail toFlashCardResponseDetail(Flashcard card) {
+        VocabularySense sense = card.getVocabularySense();
+
+        return new FlashcardResponseDetail(
+                card.getId(),
+                sense.getKoreanTerm(),
+                sense.getRomanization(),
+                sense.getFrenchTerm().getTerm(),
+                sense.getMeaning(),
+                sense.getPartOfSpeech(),
+                sense.getImagePath() != null ? imageStorageService.buildUrl(sense.getImagePath()) : null,
+                card.getReviewCount(),
+                card.getLastReviewedAt(),
+                card.getNextReviewAt(),
+                card.getCreatedAt()
+        );
+    }
 }
