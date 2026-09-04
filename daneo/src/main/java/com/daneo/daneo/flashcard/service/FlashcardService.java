@@ -14,6 +14,8 @@ import com.daneo.daneo.image.service.ImageStorageService;
 import com.daneo.daneo.romanization.service.RomanizationService;
 import com.daneo.daneo.vocabulary.domain.VocabularySense;
 import com.daneo.daneo.vocabulary.dto.VocabularySenseInfos;
+import com.daneo.daneo.vocabulary.exception.VocabularySenseNotFoundException;
+import com.daneo.daneo.vocabulary.repository.VocabularySenseRepository;
 import com.daneo.daneo.vocabulary.service.VocabularySenseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,16 +35,18 @@ public class FlashcardService {
     private final ImageStorageService imageStorageService;
     private final DeckRepository deckRepository;
     private final FlashcardRepository flashcardRepository;
+    private final VocabularySenseRepository vocabularySenseRepository;
 
     public FlashcardService(RomanizationService romanizationService, ImageService imageService,
                             VocabularySenseService vocabularyService, ImageStorageService imageStorageService,
-                            DeckRepository deckRepository, FlashcardRepository flashcardRepository) {
+                            DeckRepository deckRepository, FlashcardRepository flashcardRepository, VocabularySenseRepository vocabularySenseRepository) {
         this.romanizationService = romanizationService;
         this.imageService = imageService;
         this.vocabularyService = vocabularyService;
         this.deckRepository = deckRepository;
         this.flashcardRepository = flashcardRepository;
         this.imageStorageService = imageStorageService;
+        this.vocabularySenseRepository = vocabularySenseRepository;
     }
 
     public FlashcardSummary create(FlashcardCreateRequest request) {
@@ -102,5 +106,25 @@ public class FlashcardService {
                 card.getNextReviewAt(),
                 card.getCreatedAt()
         );
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        Flashcard card = flashcardRepository.findById(id)
+                .orElseThrow(() -> new FlashcardNotFoundException("Flashcard not found :" + id));
+
+        VocabularySense voca = card.getVocabularySense();
+
+        flashcardRepository.delete(card);
+        flashcardRepository.flush();
+
+        List<Flashcard> list = flashcardRepository.findFlashcardByVocabularySense(voca);
+
+        if (list.isEmpty()) {
+            if (voca.getImagePath() != null) {
+                imageStorageService.delete(voca.getImagePath());
+            }
+            vocabularySenseRepository.delete(voca);
+        }
     }
 }

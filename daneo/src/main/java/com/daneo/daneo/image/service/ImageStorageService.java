@@ -28,4 +28,6 @@ public interface ImageStorageService {
      * @return the URL through which the image can be retrieved
      */
     String buildUrl(String reference);
+
+    boolean delete(String reference);
 }

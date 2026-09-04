@@ -1,6 +1,9 @@
 package com.daneo.daneo.image.service;
 
+import com.daneo.daneo.flashcard.service.FlashcardService;
 import com.daneo.daneo.image.exception.ImageStorageException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ public class LocalDiskImageStorageService implements ImageStorageService {
 
     private final Path storageDirectory;
     private final String publicBaseUrl;
+    private static final Logger log = LoggerFactory.getLogger(LocalDiskImageStorageService.class);
 
     public LocalDiskImageStorageService(@Value("${daneo.image.storage-path}") String storagePath,
                                         @Value("${daneo.image.public-base-url}") String publicBaseUrl) {
@@ -50,5 +54,17 @@ public class LocalDiskImageStorageService implements ImageStorageService {
     @Override
     public String buildUrl(String reference) {
         return publicBaseUrl + "/images/" + reference;
+    }
+
+    @Override
+    public boolean delete(String reference) {
+        try {
+            Path path = storageDirectory.resolve(reference);
+            Files.deleteIfExists(path);
+            return true;
+        } catch (IOException e) {
+            log.warn("Cannot delete the image." + reference);
+        }
+        return false;
     }
 }

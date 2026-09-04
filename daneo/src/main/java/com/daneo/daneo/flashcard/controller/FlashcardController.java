@@ -36,4 +36,10 @@ public class FlashcardController {
         FlashcardResponseDetail flashcard = flashcardService.getById(id);
         return ResponseEntity.ok(flashcard);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        flashcardService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
