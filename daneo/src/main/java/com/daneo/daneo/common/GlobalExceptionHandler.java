@@ -1,6 +1,8 @@
 package com.daneo.daneo.common;
 
 import com.daneo.daneo.common.exception.NotFoundException;
+import com.daneo.daneo.image.exception.ImageGenerationException;
+import com.daneo.daneo.image.exception.ImageStorageException;
 import com.daneo.daneo.translation.exception.TranslationServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -57,6 +59,12 @@ public class GlobalExceptionHandler {
 //        log.error("Translation service failure", e);   // ← la cause technique dans les logs
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage());
         problem.setTitle("Translation unavailable");
+        return problem;
+    }
+
+    @ExceptionHandler(ImageGenerationException.class)
+    public ProblemDetail handleImageGenerationException(ImageStorageException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         return problem;
     }
 }
