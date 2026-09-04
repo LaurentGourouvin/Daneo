@@ -6,6 +6,7 @@ import com.daneo.daneo.deck.exception.DeckNotFoundException;
 import com.daneo.daneo.deck.repository.DeckRepository;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
 import com.daneo.daneo.flashcard.repository.FlashcardRepository;
+import com.daneo.daneo.image.service.ImageStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,13 @@ public class DeckService {
 
     private final DeckRepository deckRepository;
     private final FlashcardRepository flashcardRepository; // Trouver une autre solution pour éviter ce couplage
+    private final ImageStorageService imageStorageService;
 
-    public DeckService(DeckRepository deckRepository, FlashcardRepository flashcardRepository) {
+    public DeckService(DeckRepository deckRepository, FlashcardRepository flashcardRepository,
+                       ImageStorageService imageStorageService) {
         this.deckRepository = deckRepository;
         this.flashcardRepository = flashcardRepository;
+        this.imageStorageService = imageStorageService;
     }
 
     @Transactional(readOnly = true)
@@ -56,9 +60,20 @@ public class DeckService {
     public DeckDetailResponse getDeckWithCards(Integer id) {
         Deck deck = deckRepository.findById(id).orElseThrow(() -> new DeckNotFoundException(id));
         List<FlashcardSummary> flashcards = flashcardRepository.findSummariesByDeckId(id);
+
+        List<FlashcardSummary> cards = flashcards.stream()
+                .map(card -> new FlashcardSummary(
+                        card.id(),
+                        card.koreanTerm(),
+                        card.romanization(),
+                        card.frenchTerm(),
+                        card.imagePath() != null ? imageStorageService.buildUrl(card.imagePath()) : null
+                ))
+                .toList();
+
         return new DeckDetailResponse(
                 deck.getId(), deck.getName(), deck.getDescription(),
-                flashcards, deck.getCreatedAt(), deck.getUpdatedAt());
+                cards, deck.getCreatedAt(), deck.getUpdatedAt());
     }
 
     private DeckResponse toResponse(Deck deck) {

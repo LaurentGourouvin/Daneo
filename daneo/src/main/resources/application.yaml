@@ -25,7 +25,7 @@ spring:
 daneo:
   image:
     storage-path: ${DANEO_IMAGE_STORAGE_PATH}
-    public-base-url: ${DANEO_PUBLIC_BASE_URL}}
+    public-base-url: ${DANEO_PUBLIC_BASE_URL}
   openai:
     api-key: ${DANEO_OPENAI_API_KEY}
     base-url: ${DANEO_OPENAI_BASE_URL}

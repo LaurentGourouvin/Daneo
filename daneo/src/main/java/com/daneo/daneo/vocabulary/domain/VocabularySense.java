@@ -61,4 +61,14 @@ public class VocabularySense {
         this.imagePath = imagePath;
         this.frenchTerm = frenchTerm;
     }
+
+    public VocabularySense(String koreanTerm, String romanization, PartOfSpeech partOfSpeech, String meaning,
+                           String imagePath, FrenchTerm frenchTerm) {
+        this.koreanTerm = koreanTerm;
+        this.romanization = romanization;
+        this.partOfSpeech = partOfSpeech;
+        this.meaning = meaning;
+        this.imagePath = imagePath;
+        this.frenchTerm = frenchTerm;
+    }
 }
