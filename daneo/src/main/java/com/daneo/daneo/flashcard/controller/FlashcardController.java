@@ -42,4 +42,10 @@ public class FlashcardController {
         flashcardService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/regenerate-image")
+    public ResponseEntity<Void> updateImage(@PathVariable Integer id) {
+        flashcardService.regenerateImage(id);
+        return ResponseEntity.ok().build();
+    }
 }

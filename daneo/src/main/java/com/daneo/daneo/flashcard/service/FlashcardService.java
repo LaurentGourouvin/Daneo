@@ -9,6 +9,7 @@ import com.daneo.daneo.flashcard.dto.FlashcardResponseDetail;
 import com.daneo.daneo.flashcard.dto.FlashcardSummary;
 import com.daneo.daneo.flashcard.exception.FlashcardNotFoundException;
 import com.daneo.daneo.flashcard.repository.FlashcardRepository;
+import com.daneo.daneo.image.exception.ImageGenerationException;
 import com.daneo.daneo.image.service.ImageService;
 import com.daneo.daneo.image.service.ImageStorageService;
 import com.daneo.daneo.romanization.service.RomanizationService;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -125,6 +127,39 @@ public class FlashcardService {
                 imageStorageService.delete(voca.getImagePath());
             }
             vocabularySenseRepository.delete(voca);
+        }
+    }
+
+    @Transactional
+    public void regenerateImage(Integer id) {
+        Flashcard card = flashcardRepository.findById(id)
+                .orElseThrow(() -> new FlashcardNotFoundException("Flashcard not found : " + id));
+
+        VocabularySense voca = card.getVocabularySense();
+
+        String oldImagePath = voca.getImagePath();
+
+        try {
+            byte[] newImage = imageService.generateIllustration(voca.getFrenchTerm().getTerm(), voca.getKoreanTerm(),
+                    voca.getMeaning(), voca.getPartOfSpeech().toString());
+
+            if (newImage.length == 0) {
+                throw new ImageGenerationException("Image generation failed");
+            }
+
+            byte[] optimizedImage = imageService.resizeImage(newImage);
+
+            String imagePath = imageStorageService.store(optimizedImage);
+
+            voca.updateImagePath(imagePath);
+            vocabularySenseRepository.flush();
+
+            if (oldImagePath != null) {
+                imageStorageService.delete(oldImagePath);
+            }
+
+        } catch (IOException e) {
+            throw new ImageGenerationException("Image regeneration failed for card " + id, e);
         }
     }
 }

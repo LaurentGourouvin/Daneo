@@ -71,4 +71,8 @@ public class VocabularySense {
         this.imagePath = imagePath;
         this.frenchTerm = frenchTerm;
     }
+
+    public void updateImagePath (String path) {
+        imagePath = path;
+    }
 }
