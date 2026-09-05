@@ -32,6 +32,8 @@ daneo:
 #    project-id: ${DANEO_OPENAI_PROJECT_ID}
     model-text: ${DANEO_OPENAI_MODEL_TEXT}
     model-image: ${DANEO_OPENAI_MODEL_IMAGE}
+  cors:
+    allowed-origin: ${DANEO_ALLOW_ORIGINS}
 
 logging:
   level:
