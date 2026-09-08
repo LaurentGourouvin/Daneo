@@ -44,63 +44,91 @@ Prioritize **clarity and memorability over artistic complexity**.
 
 ## Visual style
 
-Use a consistent **modern manga / comic-book inspired illustration style**.
+Use a soft, hand-painted **watercolor and gouache** style with a **pastel palette**.
 
 The style should be:
 
-- clean;
-- polished;
+- soft;
 - warm;
-- modern;
+- calm;
+- hand-painted;
+- gently textured (visible paper grain and pigment);
+- modern editorial illustration;
 - slightly playful;
 - adult-friendly;
-- expressive without exaggeration;
 - simple;
-- visually memorable;
-- suitable for a language-learning application.
+- immediately readable;
+- visually memorable.
 
 Use:
 
-- clean line art;
-- soft outlines;
-- simple shapes;
-- controlled detail;
-- soft shading;
-- a pleasant and slightly muted color palette;
-- subtle manga / comic visual influence.
+- loose watercolor washes and soft gouache;
+- soft, feathered edges;
+- delicate, loose linework only where it helps readability (thin, sparse, never dominant);
+- a muted pastel color palette;
+- subtle paper and pigment texture;
+- gentle, diffuse shading.
 
 Do NOT use:
 
-- photorealism;
-- hyperrealism;
-- extremely detailed manga rendering;
+- photorealism or hyperrealism;
+- hard black outlines or heavy comic / manga inking;
+- a flat vector or clip-art look;
+- oversaturated, neon, or high-contrast colors;
+- dramatic or cinematic lighting;
 - childish cartoon styling;
 - chibi proportions;
-- dramatic cinematic lighting;
-- complex scenery;
+- an opaque or filled background;
+- drop shadows, borders, or hard frames;
 - excessive visual effects.
 
-The objective is to maintain a **consistent illustration system across thousands of vocabulary flashcards**.
+The objective is to maintain a **consistent watercolor illustration system across thousands of vocabulary flashcards**.
+
+## Background and support wash
+
+**The background must be fully transparent (alpha channel).**
+
+Do not paint a scene, a sky, a floor, a table, or any filled backdrop. Outside the painted subject and its support wash, the canvas is empty and transparent.
+
+Give the subject a **support wash**: a soft, loose pool of pastel watercolor pigment sitting directly behind and around the subject. This wash gives the painting its matter and keeps it from looking thin or detached on the transparent canvas.
+
+Rules for the support wash:
+
+- it is **organic and free-form** — it must NOT be a circle, an ellipse, or any regular geometric shape; keep its outline loose and painterly;
+- its edges **feather softly into transparency** — no hard border, no clean cut, no visible frame;
+- it stays **subtle and low-contrast** — it supports the subject, it is never a full background fill;
+- it sits **behind** the subject, roughly following the subject's mass without tracing it exactly.
+
+Keep the transparent area clean: no stray specks, no scattered droplets, no cast shadow on the empty canvas.
 
 ## Composition
 
-Use a **square composition**.
+Use a **square canvas**, but the illustration need not read as a square block. The soft wash and the subject should feel painted onto the page, not boxed into a tile.
 
 The main concept must:
 
+- be a single primary subject;
 - be centered or clearly dominant;
-- occupy a large part of the image;
-- remain clearly recognizable at small size.
+- occupy a large part of the canvas;
+- remain clearly recognizable at small size (~400 × 400 px).
 
 Prefer:
 
 - one primary subject;
 - close or medium framing;
-- generous negative space;
-- a simple background;
+- generous transparent space around the wash;
 - minimal secondary objects.
 
 Secondary elements may only be included when they are necessary to understand the meaning.
+
+**Frame-breaking (use only when it fits the subject):**
+
+You may let one or more parts of the subject extend **beyond the support wash** into the surrounding transparent area — for example an ear, a paw, a leaf, a stem, a wingtip, or an elbow crossing the soft edge of the wash.
+
+- Use it when it adds life or when the subject's natural shape calls for it.
+- It is **optional and discretionary**, never mandatory.
+- Never force it onto a subject where it would look unnatural or hurt readability.
+- The subject must stay fully recognizable whether or not it breaks the wash.
 
 Avoid:
 
@@ -216,23 +244,21 @@ Use Korean cultural context only when it is genuinely relevant to the vocabulary
 
 ## Consistency requirement
 
-All Daneo illustrations should feel as if they belong to the same visual collection.
+All Daneo illustrations should feel as if they belong to the same hand-painted watercolor collection. This is the most fragile point of the medium, so hold these constant across every card:
 
-Maintain consistent:
-
-- line weight;
-- detail level;
-- shading style;
-- visual density;
-- framing;
-- color softness;
-- manga/comic influence.
+- **palette** — the same muted pastel range, never oversaturated;
+- **wash intensity** — the support wash always subtle and low-contrast, never a heavy flat fill;
+- **edge softness** — the same feathered, hand-painted edge quality;
+- **texture amount** — a consistent, restrained level of paper and pigment grain;
+- **linework** — the same delicate, sparse treatment (or none), never hard black outlines;
+- **shading** — the same gentle, diffuse light, never dramatic;
+- **framing and density** — a single dominant subject with generous transparency around it.
 
 A card showing an apple and another showing a cat should visibly belong to the same application.
 
 ## Final instruction
 
-Generate **one clear educational illustration representing only the intended meaning of `{{frenchWord}}` (`{{meaning}}`)**.
+Generate **one clear educational illustration representing only the intended meaning of `{{frenchWord}}` (`{{meaning}}`)**, hand-painted in soft watercolor and pastel on a **fully transparent background**, resting on a subtle free-form support wash, with optional frame-breaking only where it suits the subject.
 
 The image must be instantly recognizable on a mobile flashcard.
 

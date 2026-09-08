@@ -15,7 +15,6 @@ import com.daneo.daneo.image.service.ImageStorageService;
 import com.daneo.daneo.romanization.service.RomanizationService;
 import com.daneo.daneo.vocabulary.domain.VocabularySense;
 import com.daneo.daneo.vocabulary.dto.VocabularySenseInfos;
-import com.daneo.daneo.vocabulary.exception.VocabularySenseNotFoundException;
 import com.daneo.daneo.vocabulary.repository.VocabularySenseRepository;
 import com.daneo.daneo.vocabulary.service.VocabularySenseService;
 import org.slf4j.Logger;
